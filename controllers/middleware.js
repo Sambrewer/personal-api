@@ -1,3 +1,4 @@
+var skillz = require('../skillz.js')
 module.exports = {
   addHeaders: function(req, res, next) {
     res.status(200).set({
@@ -11,5 +12,16 @@ module.exports = {
     });
 
     next();
+  },
+  generateId: function(req, res, next) {
+    req.body.newSkillz.id = skillz.length + 1;
+    next();
+  },
+  verifyUser: function(req, res, next) {
+    if (req.params.username === "brewhaha" && req.params.pin === '1991') {
+      next();
+    } else {
+      res.status(403).send({error: 'You\'re not allowed in here'});
+    }
   }
 }
